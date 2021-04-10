@@ -1,10 +1,9 @@
 import React,{ Component } from 'react'
-import  { View, Text } from 'react-native'
+import  { View, Text, TouchableOpacity } from 'react-native'
 import { getMetricMetaInfo, timeToString } from '../utils/helpers'
 import UdaciSlider from './UdaciSlider'
 import UdaciStepper from './UdaciStepper'
 import DateHeader from './DateHeader'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 function SubmitBtn ({ onPress }) {
   return (
