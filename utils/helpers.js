@@ -1,7 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
-import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { FontAwesome, MaterialIcons, MaterialCommunityIcons, Ionicons} from '@expo/vector-icons'
 import { white } from './colors'
+import { exp } from 'react-native-reanimated'
 
 export function isBetween (num, x, y) {
   if (num >= x && num <= y) {
@@ -142,4 +143,11 @@ export function getMetricMetaInfo (metric) {
   return typeof metric === 'undefined'
     ? info
     : info[metric]
+}
+
+export function getDailyReminderValue () {
+  return {
+    // <Ionicons name="ios-alert-circle" size={24} color="black" />
+    today: "Don't forget to log your data today!"
+  }
 }
