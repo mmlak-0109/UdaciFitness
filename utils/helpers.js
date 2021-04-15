@@ -2,7 +2,6 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons, Ionicons} from '@expo/vector-icons'
 import { white, red, orange, blue, lightPurp, pink } from './colors'
-import { exp } from 'react-native-reanimated'
 
 export function isBetween (num, x, y) {
   if (num >= x && num <= y) {
