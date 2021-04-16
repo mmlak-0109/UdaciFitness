@@ -73,7 +73,6 @@ class History extends Component {
         renderItem={this.renderItem}
         renderEmptyDate={this.renderEmptyDate}
       />
-      // <Text>{JSON.stringify(entries)}</Text>
     )
   }
 }
