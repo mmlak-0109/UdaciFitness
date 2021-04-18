@@ -9,6 +9,12 @@ import { timeToString, getDailyReminderValue } from '../utils/helpers'
 import TextButton from './TextButton'
 
 class EntryDetail extends Component {
+  setTitle = (entryId) => {
+    this.props.navigation.setOptions({
+      title: entryId.split('-').join('/')
+    })
+  }
+
   reset = () => {
     const { remove, goBack, entryId } = this.props
 
@@ -23,6 +29,7 @@ class EntryDetail extends Component {
 
   render() {
     const { entryId, metrics } = this.props
+    this.setTitle(entryId)
 
     return (
       <View style={styles}>
