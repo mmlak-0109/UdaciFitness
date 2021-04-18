@@ -7,12 +7,14 @@ import { createStore } from 'redux'
 import  { Provider } from 'react-redux'
 import reducer from './reducers'
 import History from './components/History'
-import { purple, white } from './utils/colors'
+import { pink, purple, white } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { createStackNavigator } from '@react-navigation/stack'
 import Constants from 'expo-constants'
+import EntryDetail from './components/EntryDetail'
 
 function UdaciStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -24,7 +26,7 @@ function UdaciStatusBar ({ backgroundColor, ...props }) {
 
 const Tab = Platform.OS === 'ios' ? createBottomTabNavigator() : createMaterialTopTabNavigator()
 
-const screenOptions = ({ route }) => ({
+const tabScreenOptions = ({ route }) => ({
   tabBarIcon: ({ focused, color, size}) => {
     let iconName;
     if (route.name === 'History') {
@@ -43,7 +45,7 @@ const screenOptions = ({ route }) => ({
   }
 })
 
-const navigationOptions = {
+const tabNavigationOptions = {
     header: null
   }
 
@@ -62,7 +64,28 @@ const tabBarOptions = {
   }
 }
 
+const MainNavigator = createStackNavigator()
 
+const stackScreenOptions = {
+  headerTintColor: white,
+  headerStyle: {
+    backgroundColor: purple
+  }
+}
+
+function Home() {
+  return (
+    <Tab.Navigator
+      initialRouteName='History'
+      screenOptions={tabScreenOptions}
+      tabBarOptions={tabBarOptions}
+      navigationOptions={tabNavigationOptions}
+    >
+      <Tab.Screen name='History' component={History} />
+      <Tab.Screen name='Add Entry' component={AddEntry} />
+    </Tab.Navigator>
+  )
+}
 
 export default function App() {
   return (
@@ -70,15 +93,13 @@ export default function App() {
       <Provider store={createStore(reducer)}>
         <View style={{flex: 1}}>
           <UdaciStatusBar backgroundColor={purple} barStyle='light-content' />
-          <Tab.Navigator
-            initialRouteName='History'
-            screenOptions={screenOptions}
-            tabBarOptions={tabBarOptions}
-            navigationOptions={navigationOptions}
+          <MainNavigator.Navigator
+            initialRouteName='Home'
+            screenOptions={stackScreenOptions}
           >
-            <Tab.Screen name='History' component={History} />
-            <Tab.Screen name='Add Entry' component={AddEntry} />
-          </Tab.Navigator>
+            <MainNavigator.Screen name='Home' component={Home} />
+            <MainNavigator.Screen name='Entry Detail' component={EntryDetail} />
+          </MainNavigator.Navigator>
         </View>
       </Provider>
     </NavigationContainer>
