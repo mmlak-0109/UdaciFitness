@@ -100,7 +100,7 @@ class AddEntry extends Component {
 
   toHome = () => {
     this.props.navigation.dispatch(CommonActions.goBack({
-      key: 'AddEntry'
+      key: 'Add Entry'
     }));
   }
 
