@@ -15,6 +15,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { createStackNavigator } from '@react-navigation/stack'
 import Constants from 'expo-constants'
 import EntryDetail from './components/EntryDetail'
+import Live from './components/Live'
 
 function UdaciStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -41,6 +42,12 @@ const tabScreenOptions = ({ route }) => ({
         : 'plus-square-o'
       
       return <FontAwesome name={iconName} size={30} color={color} />
+    } else if (route.name === 'Live') {
+      iconName = focused
+        ? 'ios-speedometer'
+        : 'ios-speedometer-outline'
+      
+      return <Ionicons name={iconName} size={30} color={color} />
     }
   }
 })
@@ -83,6 +90,7 @@ function Home() {
     >
       <Tab.Screen name='History' component={History} />
       <Tab.Screen name='Add Entry' component={AddEntry} />
+      <Tab.Screen name='Live' component={Live} />
     </Tab.Navigator>
   )
 }
