@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
-import { AsyncStorage } from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons, Ionicons} from '@expo/vector-icons'
 import { white, red, orange, blue, lightPurp, pink } from './colors'
 import * as Notifications from 'expo-notifications'
@@ -164,7 +164,6 @@ export function getMetricMetaInfo (metric) {
 
 export function getDailyReminderValue () {
   return {
-    // <Ionicons name="ios-alert-circle" size={24} color="black" />
     today: "Don't forget to log your data today!"
   }
 }
@@ -191,7 +190,7 @@ function createNotification () {
 }
 
 export function setLocalNotification () {
-  AsyncStorage.getIem(NOTIFICATION_KEY)
+  AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(({ status }) => {
       if (status === 'granted') {
         Notifications.cancelAllScheduledNotificationsAsync()
