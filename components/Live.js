@@ -8,14 +8,14 @@ import { calculateDirection } from '../utils/helpers'
 
 export default class Live extends Component {
   state = {
-    coords: null,
-    status: 'granted',
+    coords: '',
+    status: null,
     direction: '',
   }
 
   componentDidMount () {
     Location.getForegroundPermissionsAsync(Permissions.LOCATION_FOREGROUND)
-      .then(({status}) => {
+      .then(({ status }) => {
         if (status === 'granted') {
           return this.setLocation()
         }
@@ -23,23 +23,32 @@ export default class Live extends Component {
         this.setState(() => ({ status }))
       })
       .catch((error) => {
-        console.warn('Error getting Location permission', error)
+        console.warn('Error getting Location permission: ', error)
 
         this.setState(() => ({ status: 'undetermined' }))
       })
   }
 
   askPermission = () => {
+    Location.requestForegroundPermissionsAsync(Permissions.LOCATION_FOREGROUND)
+      .then(({ status }) => {
+        if (status === 'granted') {
+          return this.setLocation()
+        }
 
+        this.setState(() => ({ status }))
+      })
+      .catch((error) => console.warn('Error asking Loacation permission: ', error))
   }
 
   setLocation = () => {
     Location.watchPositionAsync({
       accuracy: 5,
       timeInterval: 1,
-      distanceInterval: 1,
+      distanceInterval: 0.01,
     }, ((coords) => {
-      const newDirection = calculateDirection(coords.heeading)
+      console.log(coords)
+      const newDirection = calculateDirection(coords.heading)
       const { direction } = this.state
 
       this.setState(() => ({
@@ -88,7 +97,7 @@ export default class Live extends Component {
       <View style={styles.container}>
         <View style={styles.directionContainer}>
           <Text style={styles.header}>You're heading</Text>
-          <Text style={styles.direction}>North</Text>
+          <Text style={styles.direction}>{direction}</Text>
         </View>
         <View style={styles.metricContainer}>
           <View style={styles.metric}>
@@ -96,7 +105,7 @@ export default class Live extends Component {
               Altitude
             </Text>
             <Text style={[styles.subHeader, { color: white }]}>
-              {200} Feet
+              {Math.round(coords.altitude * 3.2808)} Feet
             </Text>
           </View>
           <View style={styles.metric}>
@@ -104,7 +113,7 @@ export default class Live extends Component {
               Speed
             </Text>
             <Text style={[styles.subHeader, { color: white }]}>
-              {300} MPH
+              {(coords.speed * 2.2369).toFixed(1)} MPH
             </Text>
           </View>
         </View>
