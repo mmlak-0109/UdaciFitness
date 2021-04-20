@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'
 // import { StatusBar } from 'expo-status-bar';
-import React from 'react'
+import React, { Component } from 'react'
 import { View, Platform, StatusBar } from 'react-native'
 import AddEntry from './components/AddEntry'
 import { createStore } from 'redux'
@@ -16,6 +16,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Constants from 'expo-constants'
 import EntryDetail from './components/EntryDetail'
 import Live from './components/Live'
+import { setLocalNotification } from './utils/helpers'
 
 function UdaciStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -95,21 +96,27 @@ function Home() {
   )
 }
 
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Provider store={createStore(reducer)}>
-        <View style={{flex: 1}}>
-          <UdaciStatusBar backgroundColor={purple} barStyle='light-content' />
-          <MainNavigator.Navigator
-            initialRouteName='Home'
-            screenOptions={stackScreenOptions}
-          >
-            <MainNavigator.Screen name='Home' component={Home} />
-            <MainNavigator.Screen name='Entry Detail' component={EntryDetail} />
-          </MainNavigator.Navigator>
-        </View>
-      </Provider>
-    </NavigationContainer>
-  );
+export default class App extends Component {
+  componentDidMount () {
+    setLocalNotification()
+  }
+
+  render() {
+    return (
+      <NavigationContainer>
+        <Provider store={createStore(reducer)}>
+          <View style={{flex: 1}}>
+            <UdaciStatusBar backgroundColor={purple} barStyle='light-content' />
+            <MainNavigator.Navigator
+              initialRouteName='Home'
+              screenOptions={stackScreenOptions}
+            >
+              <MainNavigator.Screen name='Home' component={Home} />
+              <MainNavigator.Screen name='Entry Detail' component={EntryDetail} />
+            </MainNavigator.Navigator>
+          </View>
+        </Provider>
+      </NavigationContainer>
+    );
+  }
 }
