@@ -48,7 +48,6 @@ export default class Live extends Component {
       timeInterval: 1,
       distanceInterval: 0.01,
     }, ((coords) => {
-      console.log(coords)
       const newDirection = calculateDirection(coords.heading)
       const { direction, bounceValue } = this.state
 
