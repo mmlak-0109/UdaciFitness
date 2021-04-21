@@ -1,5 +1,4 @@
 import 'react-native-gesture-handler'
-// import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react'
 import { View, Platform, StatusBar } from 'react-native'
 import AddEntry from './components/AddEntry'
